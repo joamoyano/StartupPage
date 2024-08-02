@@ -12,40 +12,35 @@
 <body class="register-background">
     <div class="container-fluid min-vh-100 d-flex flex-column justify-content-center">
         <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card shadow-sm ">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
                     <div class="card-body bg-light">
                         <h3 class="card-title text-center">Client Registration</h3>
                         <p class="card-text text-center text-muted">Fill out the form below to onboard a new client.</p>
                         <div class="row">
                             <div class="col-md-6">
-                                <form>
+                                <form action="register_process.php" method="POST">
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="firstName">First Name</label>
-                                            <input type="text" class="form-control bg-light" id="firstName"
-                                                placeholder="John" required>
+                                            <input type="text" class="form-control bg-light" id="firstName" name="first_name" placeholder="John" required>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="lastName">Last Name</label>
-                                            <input type="text" class="form-control bg-light" id="lastName"
-                                                placeholder="Doe" required>
+                                            <input type="text" class="form-control bg-light" id="lastName" name="last_name" placeholder="Doe" required>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Email</label>
-                                        <input type="email" class="form-control bg-light" id="email"
-                                            placeholder="john@example.com" required>
+                                        <input type="email" class="form-control bg-light" id="email" name="email" placeholder="john@example.com" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="phone">Phone Number</label>
-                                        <input type="tel" class="form-control bg-light" id="phone"
-                                            placeholder="(123) 456-7890" required>
+                                        <input type="tel" class="form-control bg-light" id="phone" name="phone" placeholder="(123) 456-7890" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="company">Company</label>
-                                        <input type="text" class="form-control bg-light" id="company"
-                                            placeholder="Startup">
+                                        <input type="text" class="form-control bg-light" id="company" name="company" placeholder="Startup">
                                     </div>
                                     <button type="submit" class="btn btn-custom btn-block">Register</button>
                                 </form>
@@ -53,7 +48,7 @@
                             </div>
                             <div class="col-md-6 d-flex align-items-center justify-content-center">
                                 <img src="assets/registerHero.png" class="img-fluid" alt="Registration Image">
-                              </div>
+                            </div>
                         </div>
                     </div>
                 </div>
