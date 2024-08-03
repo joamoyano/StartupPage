@@ -15,7 +15,10 @@ foreach ($clients as $client) {
     echo "<td>{$client['company']}</td>";
     echo '<td class="text-right">';
     echo '<button class="btn btn-sm btn-warning mr-2">Edit</button>';
-    echo '<button class="btn btn-sm btn-danger">Delete</button>';
+    echo '<form action="delete_client.php" method="POST" style="display:inline-block;">
+              <input type="hidden" name="id" value="'.$client['id'].'">
+              <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+          </form>';
     echo '</td>';
     echo "</tr>";
 }
