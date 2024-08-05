@@ -36,7 +36,7 @@
               <p class="lead text-muted">Our cutting-edge platform helps you and your team work more efficiently, collaborate seamlessly, and achieve your goals faster.</p>
               <div class="d-flex flex-column flex-md-row gap-2 justify-content-center">
                 <a href="register.html" class="btn btn-custom btn-lg">Get Started</a> 
-                <a href="info.html" id="learn-more-button" class="btn btn-outline-secondary btn-lg">Learn More</a>
+                <a href="info.html" class="btn btn-outline-secondary btn-lg">Learn More</a>
               </div>
             </div>
             <div class="col-lg-6">
@@ -136,27 +136,6 @@
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      document.getElementById('learn-more-button').addEventListener('click', function (event) {
-        event.preventDefault(); // Evita el comportamiento predeterminado del enlace
-
-        Swal.fire({
-          title: 'Our Plans',
-          html: `
-            <h4>Basic Plan</h4>
-            <p>Perfect for small teams starting out. Includes basic collaboration features.</p>
-            <h4>Pro Plan</h4>
-            <p>Designed for growing teams. Includes advanced features like project tracking and analytics.</p>
-            <h4>Enterprise Plan</h4>
-            <p>For large organizations. Includes all features, plus dedicated support and custom integrations.</p>
-          `,
-          confirmButtonText: 'Close',
-          width: '600px' // Ajusta el ancho según tus necesidades
-        });
-      });
-    });
-  </script>
 </body>
 </html>
 </body>
