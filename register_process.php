@@ -11,9 +11,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "INSERT INTO clients (first_name, last_name, email, phone, company) VALUES (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute([$first_name, $last_name, $email, $phone, $company])) {
-        echo "New record created successfully";
+        echo 'success';
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->errorInfo();
+        echo 'Error: ' . $stmt->errorInfo()[2];
     }
 }
 ?>

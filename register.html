@@ -1,63 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Acme Inc</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Tecnomind</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-
 <body class="register-background">
-    <div class="container-fluid min-vh-100 d-flex flex-column justify-content-center">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card shadow-sm">
-                    <div class="card-body bg-light">
-                        <h3 class="card-title text-center">Client Registration</h3>
-                        <p class="card-text text-center text-muted">Fill out the form below to onboard a new client.</p>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <form action="register_process.php" method="POST">
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="firstName">First Name</label>
-                                            <input type="text" class="form-control bg-light" id="firstName" name="first_name" placeholder="John" required>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="lastName">Last Name</label>
-                                            <input type="text" class="form-control bg-light" id="lastName" name="last_name" placeholder="Doe" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input type="email" class="form-control bg-light" id="email" name="email" placeholder="john@example.com" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="phone">Phone Number</label>
-                                        <input type="tel" class="form-control bg-light" id="phone" name="phone" placeholder="(123) 456-7890" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="company">Company</label>
-                                        <input type="text" class="form-control bg-light" id="company" name="company" placeholder="Startup">
-                                    </div>
-                                    <button type="submit" class="btn btn-custom btn-block">Register</button>
-                                </form>
-                                <p class="text-center mt-3"><a href="index.html">Back to Home</a></p>
-                            </div>
-                            <div class="col-md-6 d-flex align-items-center justify-content-center">
-                                <img src="assets/registerHero.png" class="img-fluid" alt="Registration Image">
-                            </div>
-                        </div>
+  <div class="container-fluid min-vh-100 d-flex flex-column justify-content-center">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card shadow-sm">
+          <div class="card-body bg-light">
+            <h3 class="card-title text-center">Client Registration</h3>
+            <p class="card-text text-center text-muted">Fill out the form below to onboard a new client.</p>
+            <div class="row">
+              <div class="col-md-6">
+                <form id="register-form" action="register_process.php" method="POST">
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="firstName">First Name</label>
+                      <input type="text" class="form-control bg-light" id="firstName" name="first_name" placeholder="John" required>
                     </div>
-                </div>
+                    <div class="form-group col-md-6">
+                      <label for="lastName">Last Name</label>
+                      <input type="text" class="form-control bg-light" id="lastName" name="last_name" placeholder="Doe" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control bg-light" id="email" name="email" placeholder="john@example.com" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" class="form-control bg-light" id="phone" name="phone" placeholder="(123) 456-7890" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="company">Company</label>
+                    <input type="text" class="form-control bg-light" id="company" name="company" placeholder="Startup">
+                  </div>
+                  <button type="submit" class="btn btn-custom btn-block">Register</button>
+                </form>
+                <p class="text-center mt-3"><a href="index.html">Back to Home</a></p>
+              </div>
+              <div class="col-md-6 d-flex align-items-center justify-content-center">
+                <img src="assets/registerHero.png" class="img-fluid" alt="Registration Image">
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    document.getElementById('register-form').addEventListener('submit', function(event) {
+      event.preventDefault(); // Evita el envío del formulario
+      const formData = new FormData(this);
 
+      fetch('register_process.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.text())
+      .then(data => {
+        if (data.trim() === 'success') {
+          Swal.fire({
+            icon: 'success',
+            title: 'Registration Successful',
+            text: 'The client has been registered successfully!',
+            confirmButtonText: 'OK'
+          }).then(() => {
+            window.location.href = 'index.html';
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Registration Failed',
+            text: data,
+            confirmButtonText: 'OK'
+          });
+        }
+      })
+      .catch(error => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'There was an error submitting the form. Please try again later.',
+          confirmButtonText: 'OK'
+        });
+      });
+    });
+  </script>
+</body>
 </html>

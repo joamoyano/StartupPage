@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
-$username = "root";
-$password = ""; 
+$username = "root"; // Cambia esto si tu usuario es diferente
+$password = ""; // Cambia esto si tu contraseña es diferente
 $dbname = "tecnomind";
 
 try {

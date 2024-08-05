@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client List - Acme Inc</title>
+    <title>Client List - Tecnomind</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -47,7 +47,7 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
@@ -55,17 +55,27 @@
             const clientList = document.getElementById('client-list');
             const pagination = document.getElementById('pagination');
             const searchInput = document.getElementById('search');
-
+    
             let currentPage = 1;
             let searchQuery = '';
-
+    
             function fetchClients(page = 1, search = '') {
                 fetch(`get_clients.php?page=${page}&search=${search}`)
-                    .then(response => response.json())
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
                     .then(data => {
                         clientList.innerHTML = '';
                         pagination.innerHTML = '';
-
+    
+                        if (data.error) {
+                            clientList.innerHTML = `<tr><td colspan="6" class="text-center text-danger">${data.error}</td></tr>`;
+                            return;
+                        }
+    
                         data.clients.forEach(client => {
                             const row = document.createElement('tr');
                             row.innerHTML = `
@@ -84,7 +94,7 @@
                             `;
                             clientList.appendChild(row);
                         });
-
+    
                         for (let i = 1; i <= data.pages; i++) {
                             const li = document.createElement('li');
                             li.classList.add('page-item');
@@ -98,17 +108,22 @@
                             });
                             pagination.appendChild(li);
                         }
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                        clientList.innerHTML = `<tr><td colspan="6" class="text-center text-danger">Error loading clients. Please try again later.</td></tr>`;
                     });
             }
-
+    
             searchInput.addEventListener('input', (event) => {
                 searchQuery = event.target.value;
                 fetchClients(1, searchQuery);
             });
-
+    
             fetchClients();
         });
     </script>
+    
 </body>
 
 </html>

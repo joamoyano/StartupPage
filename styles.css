@@ -79,4 +79,16 @@ svg{
   margin-left: 40px;
 }
 
+.card-custom{
+  border-radius: 0.5rem;
+  background-color: #F64440;
+  color: #ffffff;
+}
+
+.btns-custom{
+  background-color: #ffffff; 
+  border-color: #ffffff; 
+  color: #F64440; 
+  transition: background-color 0.3s, border-color 0.3s;
+}
 
