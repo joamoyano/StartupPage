@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client List - Acme Inc</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -17,6 +17,9 @@
                     <div class="card-body">
                         <h3 class="card-title text-center">Client List</h3>
                         <p class="card-text text-center text-muted">View and manage your client information.</p>
+                        <div class="mb-3">
+                            <input type="text" id="search" class="form-control" placeholder="Search clients...">
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead class="thead-light">
@@ -30,10 +33,15 @@
                                     </tr>
                                 </thead>
                                 <tbody id="client-list">
-                                    <?php include 'get_clients.php'; ?>
+                                    <!-- Rows will be inserted by JavaScript -->
                                 </tbody>
                             </table>
                         </div>
+                        <nav>
+                            <ul class="pagination justify-content-center" id="pagination">
+                                <!-- Pagination will be inserted by JavaScript -->
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -42,6 +50,65 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const clientList = document.getElementById('client-list');
+            const pagination = document.getElementById('pagination');
+            const searchInput = document.getElementById('search');
+
+            let currentPage = 1;
+            let searchQuery = '';
+
+            function fetchClients(page = 1, search = '') {
+                fetch(`get_clients.php?page=${page}&search=${search}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        clientList.innerHTML = '';
+                        pagination.innerHTML = '';
+
+                        data.clients.forEach(client => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${client.first_name}</td>
+                                <td>${client.last_name}</td>
+                                <td>${client.email}</td>
+                                <td>${client.phone}</td>
+                                <td>${client.company}</td>
+                                <td class="text-right">
+                                    <a href="edit_client.html?id=${client.id}" class="btn btn-sm btn-warning mr-2">Edit</a>
+                                    <form action="delete_client.php" method="POST" style="display:inline-block;">
+                                        <input type="hidden" name="id" value="${client.id}">
+                                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                    </form>
+                                </td>
+                            `;
+                            clientList.appendChild(row);
+                        });
+
+                        for (let i = 1; i <= data.pages; i++) {
+                            const li = document.createElement('li');
+                            li.classList.add('page-item');
+                            if (i === data.page) {
+                                li.classList.add('active');
+                            }
+                            li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                            li.addEventListener('click', (e) => {
+                                e.preventDefault();
+                                fetchClients(i, searchQuery);
+                            });
+                            pagination.appendChild(li);
+                        }
+                    });
+            }
+
+            searchInput.addEventListener('input', (event) => {
+                searchQuery = event.target.value;
+                fetchClients(1, searchQuery);
+            });
+
+            fetchClients();
+        });
+    </script>
 </body>
 
 </html>
